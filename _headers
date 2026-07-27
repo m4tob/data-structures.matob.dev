@@ -1,0 +1,20 @@
+# Cabecalhos aplicados pelo Cloudflare Pages a todas as respostas deste site.
+# Referrer-Policy e X-Content-Type-Options ja vem da Cloudflare, entao nao sao
+# repetidos aqui para nao mandar o cabecalho duas vezes.
+#
+# Este site carrega Bootstrap, jQuery e SweetAlert de CDN, entao os tres hosts
+# precisam estar liberados. Atencao: liberar o host NAO protege contra o CDN
+# ser comprometido; quem faz isso e o atributo integrity (SRI) em cada tag,
+# que ainda nao existe aqui.
+#
+# Outras excecoes necessarias:
+#   'unsafe-inline' em script-src -> a logica da fila e da pilha esta em
+#                                    <script> inline, e o JSON-LD tambem
+#   'unsafe-inline' em style-src  -> <style> inline e atributos style=""
+#   frame-src 'self'              -> a index exibe queue.html e stack.html em
+#                                    iframe, ambos do mesmo dominio
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://stackpath.bootstrapcdn.com https://code.jquery.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://stackpath.bootstrapcdn.com; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=31536000
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
