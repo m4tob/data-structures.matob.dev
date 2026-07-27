@@ -13,8 +13,12 @@
 #   'unsafe-inline' em style-src  -> <style> inline e atributos style=""
 #   frame-src 'self'              -> a index exibe queue.html e stack.html em
 #                                    iframe, ambos do mesmo dominio
+#   static.cloudflareinsights.com  -> o beacon do Web Analytics, que a
+#                                     Cloudflare injeta na borda. Nao esta em
+#                                     nenhum arquivo do repositorio, e sem esta
+#                                     liberacao a metrica do site para de chegar
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://stackpath.bootstrapcdn.com https://code.jquery.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://stackpath.bootstrapcdn.com; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://stackpath.bootstrapcdn.com https://code.jquery.com https://unpkg.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://stackpath.bootstrapcdn.com; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; frame-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
   Strict-Transport-Security: max-age=31536000
   X-Frame-Options: SAMEORIGIN
   Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
