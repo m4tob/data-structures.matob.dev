@@ -5,9 +5,10 @@ Bibliotecas de terceiros servidas pelo proprio dominio, em vez de CDN.
 | arquivo | versao | origem |
 |---|---|---|
 | `bootstrap-4.6.2.min.css` | 4.6.2 | `https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css` |
-| `bootstrap-4.6.2.min.js` | 4.6.2 | `https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js` |
-| `jquery-3.7.1.slim.min.js` | 3.7.1 | `https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js` |
 | `sweetalert-2.1.2.min.js` | 2.1.2 | `https://cdn.jsdelivr.net/npm/sweetalert@2.1.2/dist/sweetalert.min.js` |
+
+Sobrou so o **CSS** do Bootstrap. O JavaScript dele e o jQuery foram removidos,
+veja abaixo.
 
 ## Por que sairam do CDN
 
@@ -26,11 +27,20 @@ numero de versao**. Tres problemas, resolvidos de uma vez ao trazer os arquivos:
 Como bonus, a CSP em `_headers` voltou a ser `'self'`: nenhum host externo
 precisa estar liberado.
 
-## Para que servem
+## jQuery e o JS do Bootstrap sairam
 
-jQuery e o JS do Bootstrap existem **so** para as abas Fila e Pilha da pagina
-inicial (`data-toggle="tab"`). O codigo do site nao chama jQuery em lugar nenhum.
-Se um dia essas duas abas virarem JavaScript puro, os dois arquivos saem juntos.
+Os dois existiam **so** para alternar as abas Fila e Pilha da pagina inicial. O
+codigo do site nunca chamou jQuery diretamente. Eram 129 KB (61 do Bootstrap, 68
+do jQuery) carregados em toda visita para trocar duas abas.
+
+A troca agora e um bloco de ~25 linhas no fim da `index.html`: tira `active` da
+aba e do painel anteriores, poe na nova, e adiciona `show` no quadro seguinte
+para a transicao de opacidade acontecer. O fade continua sendo do CSS do
+Bootstrap, que ficou.
+
+O atributo `data-toggle="tab"` saiu do markup junto, porque nao havia mais nada
+lendo ele. As classes (`nav-tabs`, `tab-pane`, `fade`) e os atributos ARIA
+continuam: as primeiras sao estilo, os segundos sao acessibilidade.
 
 ## Como atualizar
 

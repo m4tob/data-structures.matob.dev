@@ -63,12 +63,14 @@
   <div class="container mt-2 mt-md-4">
     <h2 class="text-center">Estruturas de Dados</h2>
 
+    <!-- a troca de aba e feita pelo script no fim desta pagina, nao pelo JS do
+         Bootstrap: as classes abaixo sao so de estilo -->
     <ul class="nav nav-tabs mt-1" id="myTab" role="tablist">
       <li class="nav-item">
-        <a class="nav-link active" id="queue-tab" data-toggle="tab" href="#Queue" role="tab" aria-controls="Queue" aria-selected="true">Fila</a>
+        <a class="nav-link active" id="queue-tab" href="#Queue" role="tab" aria-controls="Queue" aria-selected="true">Fila</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="stack-tab" data-toggle="tab" href="#Stack" role="tab" aria-controls="Stack" aria-selected="false">Pilha</a>
+        <a class="nav-link" id="stack-tab" href="#Stack" role="tab" aria-controls="Stack" aria-selected="false">Pilha</a>
       </li>
     </ul>
 
@@ -82,8 +84,39 @@
     </div>
   </div>
 
-  <script src="vendor/jquery-3.7.1.slim.min.js"></script>
-  <script src="vendor/bootstrap-4.6.2.min.js"></script>
+  <script>
+    // Troca de aba em JavaScript puro. Antes isso vinha do JS do Bootstrap, que
+    // por sua vez exigia o jQuery: duas bibliotecas, 129 KB, para alternar duas
+    // abas. O comportamento e o mesmo, incluindo o fade, que e do CSS.
+    (function () {
+      var abas = document.querySelectorAll('#myTab .nav-link');
+      var paineis = document.querySelectorAll('#myTabContent .tab-pane');
+
+      function ativar(aba) {
+        var alvo = document.querySelector(aba.getAttribute('href'));
+        if (!alvo) return;
+
+        abas.forEach(function (a) {
+          a.classList.remove('active');
+          a.setAttribute('aria-selected', 'false');
+        });
+        paineis.forEach(function (p) { p.classList.remove('show', 'active'); });
+
+        aba.classList.add('active');
+        aba.setAttribute('aria-selected', 'true');
+        alvo.classList.add('active');
+        // 'show' so no quadro seguinte, senao a transicao de opacidade nao roda
+        requestAnimationFrame(function () { alvo.classList.add('show'); });
+      }
+
+      abas.forEach(function (aba) {
+        aba.addEventListener('click', function (ev) {
+          ev.preventDefault();
+          ativar(aba);
+        });
+      });
+    })();
+  </script>
 </body>
 
 </html>
